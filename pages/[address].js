@@ -6,7 +6,7 @@ import Campaign from '../artifacts/contracts/Campaign.sol/Campaign.json'
 import { useEffect, useState } from "react";
 
 
-export default function Detail({Data, DonationsData}) {
+export default function Detail({Data}) {
   const [mydonations, setMydonations] = useState([]);
   const [story, setStory] = useState('');
   const [amount, setAmount] = useState();
@@ -15,7 +15,6 @@ export default function Detail({Data, DonationsData}) {
   useEffect(() => {
     const Request = async () => {
       let storyData;
-      
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const Web3provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = Web3provider.getSigner();
@@ -24,32 +23,17 @@ export default function Detail({Data, DonationsData}) {
       const provider = new ethers.providers.JsonRpcProvider(
         process.env.NEXT_PUBLIC_RPC_URL
       );
-    
       const contract = new ethers.Contract(
         Data.address,
         Campaign.abi,
         provider
       );
-
       fetch('https://crowdfunding.infura-ipfs.io/ipfs/' + Data.storyUrl)
             .then(res => res.text()).then(data => storyData = data);
-
-      const MyDonations = contract.filters.donated(Address);
-      const MyAllDonations = await contract.queryFilter(MyDonations);
-
-      setMydonations(MyAllDonations.map((e) => {
-        return {
-          donar: e.args.donar,
-          amount: ethers.utils.formatEther(e.args.amount),
-          timestamp : parseInt(e.args.timestamp)
-        }
-      }));
-
       setStory(storyData);
     }
-
     Request();
-  }, [change])
+  }, [])
 
 
   const DonateFunds = async () => {
@@ -57,12 +41,9 @@ export default function Detail({Data, DonationsData}) {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      
       const contract = new ethers.Contract(Data.address, Campaign.abi, signer);
-      
       const transaction = await contract.donate({value: ethers.utils.parseEther(amount)});
       await transaction.wait();
-
       setChange(true);
       setAmount('');
       
@@ -104,7 +85,7 @@ export default function Detail({Data, DonationsData}) {
             <FundText>{Data.receivedAmount} Matic</FundText>
           </Funds>
         </FundsData>
-        <Donated>
+        {/* <Donated>
           <LiveDonation>
             <DonationTitle>Recent Donation</DonationTitle>
             {DonationsData.map((e) => {
@@ -131,12 +112,11 @@ export default function Detail({Data, DonationsData}) {
             })
             }
           </MyDonation>
-        </Donated>
+        </Donated> */}
       </RightContainer>
     </DetailWrapper>
   );
 }
-
 
 export async function getStaticPaths() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -179,7 +159,6 @@ export async function getStaticProps(context) {
   const storyUrl = await contract.story();
   const owner = await contract.owner();
   const receivedAmount = await contract.receivedAmount();
-
   const Donations = contract.filters.donated();
   const AllDonations = await contract.queryFilter(Donations);
 

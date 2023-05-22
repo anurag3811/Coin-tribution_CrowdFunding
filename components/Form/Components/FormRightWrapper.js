@@ -33,6 +33,7 @@ const FormRightWrapper = () => {
         const added = await client.add(Handler.form.story);
         Handler.setStoryUrl(added.path)
       } catch (error) {
+        console.log(error)
         toast.warn(`Error Uploading Story`);
       }
     }
@@ -43,6 +44,7 @@ const FormRightWrapper = () => {
               const added = await client.add(Handler.image);
               Handler.setImageUrl(added.path)
           } catch (error) {
+            console.log(error)
             toast.warn(`Error Uploading Image`);
           }
       }

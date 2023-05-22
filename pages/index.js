@@ -6,29 +6,75 @@ import EventIcon from '@mui/icons-material/Event';
 import Image from 'next/image';
 import { ethers } from 'ethers';
 import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function Index({AllData, HealthData, EducationData,AnimalData}) {
-  const [filter, setFilter] = useState(AllData);
+export default function Index() {
+  // const [filter, setFilter] = useState();
+  const [campaignsData, setCampaignsData] = useState(null);
+
+  useEffect(() => {  
+
+    const Request = async () => {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const Web3provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = Web3provider.getSigner();
+      const Address = await signer.getAddress();
+
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+  
+      const contract = new ethers.Contract(
+        process.env.NEXT_PUBLIC_ADDRESS,
+        CampaignFactory.abi,
+        provider
+      );
+
+      const getAllCampaigns = contract.filters.campaignCreated(null, null, null);
+      const AllCampaigns = await contract.queryFilter(getAllCampaigns);
+      const AllData = AllCampaigns.map((e) => {
+      return {
+        title: e.args.title,
+        image: e.args.imgURI,
+        owner: e.args.owner,
+        timeStamp: parseInt(e.args.timestamp),
+        amount: ethers.utils.formatEther(e.args.requiredAmount),
+        address: e.args.campaignAddress
+      }
+      })  
+      setCampaignsData(AllData)
+    
+    
+    
+    
+    }
+
+    Request();
+
+
+
+
+  }, [])
+
 
   return (
     <HomeWrapper>
 
       {/* Filter Section */}
-      <FilterWrapper>
+      {/* <FilterWrapper>
         <FilterAltIcon style={{fontSize:40}} />
         <Category onClick={() => setFilter(AllData)}>All</Category>
         <Category onClick={() => setFilter(HealthData)}>Health</Category>
         <Category onClick={() => setFilter(EducationData)}>Education</Category>
         <Category onClick={() => setFilter(AnimalData)}>Animal</Category>
-      </FilterWrapper>
+      </FilterWrapper> */}
 
       {/* Cards Container */}
       <CardsWrapper>
 
       {/* Card */}
-      {filter.map((e) => {
+      {campaignsData == null ? (<h1>Loading</h1>) : campaignsData.map((e) => {
         return (
           <Card key={e.title}>
           <CardImg>
@@ -68,79 +114,40 @@ export default function Index({AllData, HealthData, EducationData,AnimalData}) {
 
 
 
-export async function getStaticProps() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_RPC_URL
-  );
+// export async function getStaticProps() {
+//   const provider = new ethers.providers.JsonRpcProvider(
+//     process.env.NEXT_PUBLIC_RPC_URL
+//   );
 
-  const contract = new ethers.Contract(
-    process.env.NEXT_PUBLIC_ADDRESS,
-    CampaignFactory.abi,
-    provider
-  );
+//   const contract = new ethers.Contract(
+//     process.env.NEXT_PUBLIC_ADDRESS,
+//     CampaignFactory.abi,
+//     provider
+//   );
 
-  const getAllCampaigns = contract.filters.campaignCreated();
-  const AllCampaigns = await contract.queryFilter(getAllCampaigns);
-  const AllData = AllCampaigns.map((e) => {
-    return {
-      title: e.args.title,
-      image: e.args.imgURI,
-      owner: e.args.owner,
-      timeStamp: parseInt(e.args.timestamp),
-      amount: ethers.utils.formatEther(e.args.requiredAmount),
-      address: e.args.campaignAddress
-    }
-  });
+//   const getAllCampaigns = contract.filters.campaignCreated();
+//   const AllCampaigns = await contract.queryFilter(getAllCampaigns);
+//   const AllData = AllCampaigns.map((e) => {
+//     return {
+//       title: e.args.title,
+//       image: e.args.imgURI,
+//       owner: e.args.owner,
+//       timeStamp: parseInt(e.args.timestamp),
+//       amount: ethers.utils.formatEther(e.args.requiredAmount),
+//       address: e.args.campaignAddress
+//     }
+//   });
 
-  const getHealthCampaigns = contract.filters.campaignCreated(null,null,null,null,null,null,'Health');
-  const HealthCampaigns = await contract.queryFilter(getHealthCampaigns);
-  const HealthData = HealthCampaigns.map((e) => {
-    return {
-      title: e.args.title,
-      image: e.args.imgURI,
-      owner: e.args.owner,
-      timeStamp: parseInt(e.args.timestamp),
-      amount: ethers.utils.formatEther(e.args.requiredAmount),
-      address: e.args.campaignAddress
-    }
-  });
-
-  const getEducationCampaigns = contract.filters.campaignCreated(null,null,null,null,null,null,'education');
-  const EducationCampaigns = await contract.queryFilter(getEducationCampaigns);
-  const EducationData = EducationCampaigns.map((e) => {
-    return {
-      title: e.args.title,
-      image: e.args.imgURI,
-      owner: e.args.owner,
-      timeStamp: parseInt(e.args.timestamp),
-      amount: ethers.utils.formatEther(e.args.requiredAmount),
-      address: e.args.campaignAddress
-    }
-  });
-
-  const getAnimalCampaigns = contract.filters.campaignCreated(null,null,null,null,null,null,'Animal');
-  const AnimalCampaigns = await contract.queryFilter(getAnimalCampaigns);
-  const AnimalData = AnimalCampaigns.map((e) => {
-    return {
-      title: e.args.title,
-      image: e.args.imgURI,
-      owner: e.args.owner,
-      timeStamp: parseInt(e.args.timestamp),
-      amount: ethers.utils.formatEther(e.args.requiredAmount),
-      address: e.args.campaignAddress
-    }
-  });
-
-  return {
-    props: {
-      AllData,
-      HealthData,
-      EducationData,
-      AnimalData
-    },
-    revalidate: 10
-  }
-}
+//   return {
+//     props: {
+//       AllData,
+//       HealthData,
+//       EducationData,
+//       AnimalData
+//     },
+//     revalidate: 10
+//   }
+// }
 
 
 

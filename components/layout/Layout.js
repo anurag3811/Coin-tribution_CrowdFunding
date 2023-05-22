@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = createContext();
 
 const Layout = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   const changeTheme = () => {
     setTheme(theme == "light" ? "dark" : "light");
