@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\ACER\\Desktop\\plsfund\\contracts\\Campaign.sol": {
-      "lastModificationDate": 1684591989906,
-      "contentHash": "bcbfcc48902926b3697be024f43d9c71",
+      "lastModificationDate": 1685103232336,
+      "contentHash": "9c15e8bb338a53aef9238af22773de7f",
       "sourceName": "contracts/Campaign.sol",
       "solcConfig": {
         "version": "0.8.10",

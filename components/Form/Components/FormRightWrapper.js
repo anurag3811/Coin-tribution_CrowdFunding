@@ -28,15 +28,15 @@ const FormRightWrapper = () => {
     e.preventDefault();
     setUploadLoading(true);
 
-    if(Handler.form.story !== "") {
-      try {
-        const added = await client.add(Handler.form.story);
-        Handler.setStoryUrl(added.path)
-      } catch (error) {
-        console.log(error)
-        toast.warn(`Error Uploading Story`);
-      }
-    }
+    // if(Handler.form.story !== "") {
+    //   try {
+    //     const added = await client.add(Handler.form.story);
+    //     Handler.setStoryUrl(added.path)
+    //   } catch (error) {
+    //     console.log(error)
+    //     toast.warn(`Error Uploading Story`);
+    //   }
+    // }
 
 
       if(Handler.image !== null) {

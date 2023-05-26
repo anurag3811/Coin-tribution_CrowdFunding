@@ -67,7 +67,7 @@ const Form = () => {
             CampaignAmount,
             imageUrl,
             form.category,
-            storyUrl
+            form.story
           );
     
           await campaignData.wait();   

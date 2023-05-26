@@ -45,16 +45,8 @@ export default function Index() {
       })  
       setCampaignsData(AllData)
     
-    
-    
-    
     }
-
     Request();
-
-
-
-
   }, [])
 
 

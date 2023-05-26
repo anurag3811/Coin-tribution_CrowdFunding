@@ -44,12 +44,23 @@ contract CampaignFactory {
 
 
 contract Campaign {
-    string public title;
-    uint public requiredAmount;
-    string public image;
-    string public story;
-    address payable public owner;
-    uint public receivedAmount;
+    // string public title;
+    // uint public requiredAmount;
+    // string public image;
+    // string public story;
+    // address payable public owner;
+    // uint public receivedAmount;
+
+    struct details{
+    string title;
+    uint  requiredAmount;
+    string  image;
+    string  story;
+    address payable  owner;
+    uint  receivedAmount;
+    }
+
+    details ddetails;
 
     event donated(address indexed donar, uint indexed amount, uint indexed timestamp);
 
@@ -60,18 +71,22 @@ contract Campaign {
         string memory storyURI,
         address campaignOwner
     ) {
-        title = campaignTitle;
-        requiredAmount = requiredCampaignAmount;
-        image = imgURI;
-        story = storyURI;
-        owner = payable(campaignOwner);
+        ddetails.title = campaignTitle;
+        ddetails.requiredAmount = requiredCampaignAmount;
+        ddetails.image = imgURI;
+        ddetails.story = storyURI;
+        ddetails.owner = payable(campaignOwner);
     }
 
     function donate() public payable {
-        require(requiredAmount > receivedAmount, "required amount fullfilled");
-        owner.transfer(msg.value);
-        receivedAmount += msg.value;
+        require(ddetails.requiredAmount > ddetails.receivedAmount, "required amount fullfilled");
+        ddetails.owner.transfer(msg.value);
+        ddetails.receivedAmount += msg.value;
         emit donated(msg.sender, msg.value, block.timestamp);
+    }
+
+    function getdetails() public view returns(details memory){
+        return ddetails;
     }
 }
 
