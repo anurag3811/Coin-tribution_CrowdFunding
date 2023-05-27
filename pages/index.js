@@ -55,11 +55,11 @@ export default function Index() {
   return (
     <HomeWrapper>
 
-<div class="flex justify-center">
+<div className="flex justify-center">
         <input
           placeholder="Search by Name"
           onChange={(e) => setquery(e.target.value.toLowerCase())}
-          class="p-4 rounded-full w-96 mt-4 "
+          className="p-4 rounded-full w-96 mt-4 "
           style={{ backgroundColor: "#272727" }}
         />
       </div>
