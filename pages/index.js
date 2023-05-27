@@ -10,6 +10,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
 export default function Index() {
+
+  const [query, setquery] = useState("");
   // const [filter, setFilter] = useState();
   const [campaignsData, setCampaignsData] = useState(null);
 
@@ -53,6 +55,15 @@ export default function Index() {
   return (
     <HomeWrapper>
 
+<div class="flex justify-center">
+        <input
+          placeholder="Search by Name"
+          onChange={(e) => setquery(e.target.value.toLowerCase())}
+          class="p-4 rounded-full w-96 mt-4 "
+          style={{ backgroundColor: "#272727" }}
+        />
+      </div>
+
       {/* Filter Section */}
       {/* <FilterWrapper>
         <FilterAltIcon style={{fontSize:40}} />
@@ -66,9 +77,9 @@ export default function Index() {
       <CardsWrapper>
 
       {/* Card */}
-      {campaignsData == null ? (<h1>Loading</h1>) : campaignsData.map((e) => {
+      {campaignsData == null ? (<h1>Loading</h1>) : campaignsData.filter((campaign)=> campaign.title.toLowerCase().includes(query.toLowerCase())).map((e) => {
         return (
-          <Card key={e.title}>
+          <Card key={e.title} className=' rounded-xl'>
           <CardImg>
             <Image 
               alt="Crowdfunding dapp"
@@ -172,12 +183,13 @@ const CardsWrapper = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   width: 80%;
-  margin-top: 25px;
+  margin-top: 25px;  
 `
 const Card = styled.div`
   width: 30%;
   margin-top: 20px;
   background-color: ${(props) => props.theme.bgDiv};
+  border-radius: 8px;
 
   &:hover{
     transform: translateY(-10px);

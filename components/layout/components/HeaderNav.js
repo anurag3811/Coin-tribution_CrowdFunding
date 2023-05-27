@@ -25,7 +25,8 @@ const HeaderNavWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: ${(props) => props.theme.bgDiv};
-  padding: 6px;
+  margin-left: -110px;
+  padding: 18px;
   height: 50%;
   border-radius: 10px;
   `
@@ -36,14 +37,14 @@ const HeaderNavLinks = styled.div`
   justify-content: space-between;
   background-color: ${(props) => props.active ? props.theme.bgSubDiv : props.theme.bgDiv };
   height: 100%;
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   margin: 5px;
-  border-radius: 10px;
-  padding: 0 5px 0 5px;
+  border-radius: 5px;
+  padding: 13px 5px 13px 5px;
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: small;
+  font-size: 16px;
 `
 
 export default HeaderNav

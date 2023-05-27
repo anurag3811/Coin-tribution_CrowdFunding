@@ -12,9 +12,9 @@ const HeaderRight = () => {
   return (
     <HeaderRightWrapper>
       <Wallet />
-      <ThemeToggle onClick={ThemeToggler.changeTheme}>
+      {/* <ThemeToggle onClick={ThemeToggler.changeTheme}>
       {ThemeToggler.theme === 'light' ? <DarkModeIcon /> : <Brightness7Icon />}
-      </ThemeToggle>
+      </ThemeToggle> */}
     </HeaderRightWrapper>
   )
 }
@@ -25,6 +25,7 @@ const HeaderRightWrapper = styled.div`
   align-items: center;
   margin-right: 16px;
   height: 50%;
+  fontSize: 16px;
 `
 const ThemeToggle = styled.div`
   display: flex;
