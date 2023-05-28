@@ -86,12 +86,13 @@ export default function Index() {
       {/* Card */}
       {campaignsData == null ? (<h1>Loading</h1>) : campaignsData.filter((campaign)=> campaign.title.toLowerCase().includes(query.toLowerCase())).map((e) => {
         return (
-          <Card key={e.title} className=' rounded-xl'>
+          <Card key={e.title}>
           <CardImg>
             <Image 
               alt="Crowdfunding dapp"
               objectFit='cover'
               layout='fill'
+              className=' rounded-t-xl'
               src={"https://crowdfunding.infura-ipfs.io/ipfs/" + e.image} 
             />
           </CardImg>
@@ -196,7 +197,7 @@ const CardsWrapper = styled.div`
 const Card = styled.div`
   width: 30%;
   margin-top: 20px;
-  background-color: ${(props) => props.theme.bgDiv};
+  ${'' /* background-color: ${(props) => props.theme.bgDiv}; */}
   border-radius: 8px;
 
   &:hover{
@@ -212,7 +213,10 @@ const CardImg = styled.div`
   position: relative;
   height: 120px;
   width: 100%;
+  border-radius: 12px 12px 0 0;
+  ${'' /* opacity: 0; */}
   ${'' /* object-fit: cover; */}
+  backgroundColor: #000000;
 `
 const Title = styled.h2`
   font-family: 'Roboto';
