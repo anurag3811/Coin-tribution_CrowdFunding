@@ -90,7 +90,8 @@ export default function Index() {
           <CardImg>
             <Image 
               alt="Crowdfunding dapp"
-              layout='fill' 
+              objectFit='cover'
+              layout='fill'
               src={"https://crowdfunding.infura-ipfs.io/ipfs/" + e.image} 
             />
           </CardImg>
@@ -211,6 +212,7 @@ const CardImg = styled.div`
   position: relative;
   height: 120px;
   width: 100%;
+  ${'' /* object-fit: cover; */}
 `
 const Title = styled.h2`
   font-family: 'Roboto';
