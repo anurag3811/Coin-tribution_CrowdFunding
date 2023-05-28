@@ -187,7 +187,7 @@ const Category = styled.div`
 `
 const CardsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   width: 80%;
   margin-top: 25px;  
