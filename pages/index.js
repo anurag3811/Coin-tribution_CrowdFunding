@@ -8,6 +8,7 @@ import { ethers } from 'ethers';
 import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
+import Head from "next/head";
 
 export default function Index() {
 
@@ -53,6 +54,12 @@ export default function Index() {
 
 
   return (
+
+    <>
+     <Head>
+        <link rel="shortcut icon" href="/favicon.png" />
+        <title>Coin-tribution</title>
+      </Head>
     <HomeWrapper>
 
 <div className="flex justify-center">
@@ -111,7 +118,7 @@ export default function Index() {
         {/* Card */}
 
       </CardsWrapper>
-    </HomeWrapper>
+    </HomeWrapper></>
   )
 }
 
