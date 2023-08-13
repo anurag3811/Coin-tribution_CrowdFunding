@@ -223,6 +223,7 @@ width: 98%;
 
 const LeftContainer = styled.div`
   width: 90%;
+  margin-right:36px;
 `;
 const RightContainer = styled.div`
   width: 95%;
