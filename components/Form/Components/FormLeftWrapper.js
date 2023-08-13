@@ -22,7 +22,8 @@ const FormLeftWrapper = () => {
 }
 
 const FormLeft = styled.div`
-  width:48%;
+  width:96%;
+  margin-right:25px;
 `
 
 const FormInput = styled.div`

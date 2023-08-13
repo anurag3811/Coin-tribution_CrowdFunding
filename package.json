@@ -36,5 +36,9 @@
     "eslint-config-next": "12.1.0",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.4"
-  }
+  },
+  "description": "clear readme",
+  "main": "hardhat.config.js",
+  "author": "",
+  "license": "ISC"
 }

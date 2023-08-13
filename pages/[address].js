@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 import Image from "next/image";
 import {ethers} from 'ethers';
 import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
@@ -9,13 +9,13 @@ import { useRouter } from "next/router";
 
 export default function Detail() {
   const [mydonations, setMydonations] = useState([]);
-  const [story, setStory] = useState('Loading...');
+  const [story, setStory] = useState('');
   const [amount, setAmount] = useState();
   const [change, setChange] = useState(false);
   const [title, setTitle] = useState('Loading...');
   const [requiredAmount, setrequiredAmount] = useState(0);
   const [receivedAmount, setreceivedAmount] = useState(0);
-  const [imgURI, setImgURI] = useState('');
+  const [imgURI, setImgURI] = useState(null);
   const [outsideaddress, setOutsideAddress] = useState("");
   const [toggle, setToggle] = useState(false);
   // const [addressofhere, setAddressofhere] = useState('');
@@ -101,7 +101,7 @@ useEffect(()=>{
   return (
     <DetailWrapper>
       <LeftContainer>
-        <ImageSection>
+        {imgURI == null ? (<><div></div><LoaderWrapper><Loader /></LoaderWrapper><div></div></>):        <ImageSection>
           <Image
             alt="crowdfunding dapp"
             layout="fill"
@@ -110,6 +110,8 @@ useEffect(()=>{
             }
           />
         </ImageSection>
+      }
+
         <Text>
           {story && story}
         </Text>
@@ -203,16 +205,27 @@ useEffect(()=>{
 
 
 const DetailWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  width: 98%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+margin-top: 45px;
+padding: 20px;
+width: 98%;
+
+@media (max-width: 738px) {
+  flex-direction: column;
+  justify-content: center;
+}
+
 `;
+
+
+
 const LeftContainer = styled.div`
-  width: 45%;
+  width: 90%;
 `;
 const RightContainer = styled.div`
-  width: 50%;
+  width: 95%;
 `;
 const ImageSection = styled.div`
   width: 100%;
@@ -317,4 +330,28 @@ const DonationData = styled.p`
   font-size: large;
   margin: 0;
   padding: 0;
+`;
+
+const rotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 45px; /* Adjust the margin as needed */
+`;
+
+const Loader = styled.div`
+  border: 4px solid transparent; /* Transparent border for outer circle */
+  border-top: 4px solid rgba(255, 255, 255, 0.5); /* Semi-transparent white border for spinning effect */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: ${rotate} 1.2s linear infinite; /* Apply the rotation animation */
 `;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -62,14 +62,15 @@ export default function Index() {
       </Head>
     <HomeWrapper>
 
-<div className="flex justify-center">
-        <input
-          placeholder="Search by Name"
-          onChange={(e) => setquery(e.target.value.toLowerCase())}
-          className="p-4 rounded-full w-96 mt-4 "
-          style={{ backgroundColor: "#272727" }}
-        />
-      </div>
+    <div className="flex justify-center">
+  <input
+    placeholder="Search by Name"
+    onChange={(e) => setquery(e.target.value.toLowerCase())}
+    className="p-4 rounded-full w-max sm:w-96 mt-4"
+    style={{ backgroundColor: "#272727" }}
+  />
+</div>
+
 
       {/* Filter Section */}
       {/* <FilterWrapper>
@@ -83,8 +84,7 @@ export default function Index() {
       {/* Cards Container */}
       <CardsWrapper>
 
-      {/* Card */}
-      {campaignsData == null ? (<h1>Loading</h1>) : campaignsData.filter((campaign)=> campaign.title.toLowerCase().includes(query.toLowerCase())).map((e) => {
+      {campaignsData == null ? (<><div></div><LoaderWrapper><Loader /></LoaderWrapper><div></div></>) : campaignsData.filter((campaign)=> campaign.title.toLowerCase().includes(query.toLowerCase())).map((e) => {
         return (
           <Card key={e.title}>
           <CardImg>
@@ -188,14 +188,27 @@ const Category = styled.div`
   cursor: pointer;
 `
 const CardsWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
   width: 80%;
-  margin-top: 25px;  
-`
+  margin-top: 25px;
+  justify-items: space-between;
+
+  @media (max-width: 976px) {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: space-between;
+    width: 90%;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    justify-items: space-between;
+    width: 90%;
+  }
+`;
 const Card = styled.div`
-  width: 30%;
+  width: 90%;
   margin-top: 20px;
   ${'' /* background-color: ${(props) => props.theme.bgDiv}; */}
   border-radius: 8px;
@@ -259,3 +272,28 @@ const Button = styled.button`
   font-size: 14px;
   font-weight: bold;
 `
+
+const rotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 45px; /* Adjust the margin as needed */
+`;
+
+const Loader = styled.div`
+  border: 4px solid transparent; /* Transparent border for outer circle */
+  border-top: 4px solid rgba(255, 255, 255, 0.5); /* Semi-transparent white border for spinning effect */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: ${rotate} 1.2s linear infinite; /* Apply the rotation animation */
+`;
+

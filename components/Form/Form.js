@@ -115,10 +115,16 @@ const FormMain = styled.div`
 `
 
 const FormInputsWrapper = styled.div`
-    display:flex;
-    justify-content:space-between ;
-    margin-top:45px ;
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 45px;
+
+  @media (max-width: 738px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
 
 const Spinner = styled.div`
     width:100%;

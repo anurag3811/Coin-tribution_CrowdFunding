@@ -63,14 +63,14 @@ const FormRightWrapper = () => {
             <label>Required Amount</label>
             <Input onChange={Handler.FormHandler} value={Handler.form.requiredAmount} name="requiredAmount" type={'number'} placeholder='Required Amount'></Input>
           </RowFirstInput>
-          <RowSecondInput>
+          {/* <RowSecondInput>
             <label>Choose Category</label>
             <Select onChange={Handler.FormHandler} value={Handler.form.category} name="category">
               <option>Education</option>
               <option>Health</option>
               <option>Animal</option>
             </Select>
-          </RowSecondInput>
+          </RowSecondInput> */}
         </FormRow>
       </FormInput>
       {/* Image */}
@@ -94,7 +94,7 @@ const FormRightWrapper = () => {
 }
 
 const FormRight = styled.div`
-  width:45%;
+  width:90%;
 `
 
 const FormInput = styled.div`
@@ -125,7 +125,7 @@ const Input = styled.input`
 const RowFirstInput = styled.div`
   display:flex ;
   flex-direction:column ;
-  width:45% ;
+  width:75% ;
 `
 
 const RowSecondInput = styled.div`
