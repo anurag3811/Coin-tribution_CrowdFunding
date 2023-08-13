@@ -101,7 +101,7 @@ useEffect(()=>{
   return (
     <DetailWrapper>
       <LeftContainer>
-        {imgURI == null ? (<><div></div><LoaderWrapper><Loader /></LoaderWrapper><div></div></>):        <ImageSection>
+        {imgURI == null ? (<><div></div><LoaderWrapper><Loader /></LoaderWrapper><div></div></>):<ImageSection>
           <Image
             alt="crowdfunding dapp"
             layout="fill"
@@ -232,6 +232,7 @@ const ImageSection = styled.div`
   width: 100%;
   position: relative;
   height: 350px;
+  border-radius:20px;
 `;
 const Text = styled.p`
   font-family: "Roboto";
